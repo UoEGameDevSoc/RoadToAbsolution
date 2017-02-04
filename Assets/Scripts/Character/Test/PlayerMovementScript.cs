@@ -10,6 +10,7 @@ public class PlayerMovementScript : MonoBehaviour
     private float maxSpeed = 5f;
 
     private Rigidbody rigidBody;
+    private Vector3 direction;
 
     // Use this for initialization
     void Start()
@@ -21,20 +22,29 @@ public class PlayerMovementScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * acceleration;
-        float y = Input.GetAxis("Vertical") * Time.fixedDeltaTime * acceleration;
-
-        /*rigidBody.velocity += new Vector3(x, y);
-        if (rigidBody.velocity.magnitude > maxSpeed)
+        direction = new Vector3();
+        if(Input.GetAxisRaw("Horizontal") > .1f)
         {
-            rigidBody.velocity = rigidBody.velocity.normalized * maxSpeed;
+            direction.x = 1f;
+        }
+        else if (Input.GetAxisRaw("Horizontal") < -.1f)
+        {
+            direction.x = -1f;
+        }
+        if (Input.GetAxisRaw("Vertical") > .1f)
+        {
+            direction.y = 1f;
+        }
+        else if (Input.GetAxisRaw("Vertical") < -.1f)
+        {
+            direction.y = -1f;
         }
 
-        //if (x == 0f) rigidBody.velocity.x = 0f;
-        print(x.ToString() + " " + y.ToString());
-        rigidBody.velocity = new Vector3(Input.GetButtonUp("Horizontal") ? 0f : rigidBody.velocity.x, y == 0f ? 0f : rigidBody.velocity.y, 0f);*/
+        rigidBody.velocity = direction.normalized * maxSpeed;
+    }
 
-        
-
+    private void Update()
+    {
+        //Debug.DrawLine(gameObject.transform.position, new Vector3(Mathf.Cos(Vector3.Angle(Vector3.up, direction)), Mathf.Sin(Vector3.Angle(Vector3.up, direction))) * 2f);
     }
 }
