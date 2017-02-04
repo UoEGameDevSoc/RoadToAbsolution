@@ -34,7 +34,7 @@ public class PlayerMovementScript : MonoBehaviour
         print(x.ToString() + " " + y.ToString());
         rigidBody.velocity = new Vector3(Input.GetButtonUp("Horizontal") ? 0f : rigidBody.velocity.x, y == 0f ? 0f : rigidBody.velocity.y, 0f);*/
 
-        rigidBody.transform.position += new Vector3(x, y, 0f);
+        
 
     }
 }
