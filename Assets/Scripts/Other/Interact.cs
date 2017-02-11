@@ -1,5 +1,6 @@
-﻿//Uncomment this on if you want events to be logged
-//#define DEBUG
+﻿//Comment this on if you want events to be logged
+#undef DEBUG
+
 using UnityEngine;
 using System.Collections;
 
@@ -14,7 +15,7 @@ public class Interact : MonoBehaviour {
         if (coll.gameObject.tag == "Player")
         {
             player = coll.gameObject;
-#if (DEBUG)
+#if DEBUG
             print("Player can interact with " + gameObject.name);
 #endif
         }
@@ -29,11 +30,11 @@ public class Interact : MonoBehaviour {
             {
                 isInteracting = false;
                 StopInteraction();
-#if (DEBUG)
+#if DEBUG
                 print("Interaction stopped on collider exit with " + gameObject.name);
 #endif
             }
-#if (DEBUG)
+#if DEBUG
             print("Player can no longer interact with " + gameObject.name);
 #endif
         }
@@ -47,7 +48,7 @@ public class Interact : MonoBehaviour {
             {
                 isInteracting = true;
                 StartInteraction();
-#if (DEBUG)
+#if DEBUG
                 print("Player interacted with " + gameObject.name);
 #endif
             }
@@ -55,7 +56,7 @@ public class Interact : MonoBehaviour {
             {
                 isInteracting = false;
                 StopInteraction();
-#if (DEBUG)
+#if DEBUG
                 print("Interaction stopped  with" + gameObject.name);
 #endif
             }
