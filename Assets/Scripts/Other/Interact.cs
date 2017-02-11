@@ -1,5 +1,5 @@
-﻿#define DEBUG
-
+﻿//Uncomment this on if you want events to be logged
+//#define DEBUG
 using UnityEngine;
 using System.Collections;
 
@@ -7,7 +7,6 @@ public class Interact : MonoBehaviour {
     //Reference to the player
     private GameObject player;
     //Whether we are currently interacting with something
-    //Used for things like showing/hiding UI
     private bool isInteracting = false;
 
     void OnTriggerEnter2D(Collider2D coll)
