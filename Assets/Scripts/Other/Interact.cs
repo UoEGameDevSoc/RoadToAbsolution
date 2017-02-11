@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#define DEBUG
+
+using UnityEngine;
 using System.Collections;
 
 public class Interact : MonoBehaviour {
@@ -7,33 +9,34 @@ public class Interact : MonoBehaviour {
     //Whether we are currently interacting with something
     //Used for things like showing/hiding UI
     private bool isInteracting = false;
-    //Prints to console when set to true
-    private bool debug = false;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D coll)
     {
-        if (collision.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player")
         {
-            player = collision.gameObject;
-            if(debug)
-                print("Player can interact with " + gameObject.name);
+            player = coll.gameObject;
+#if (DEBUG)
+            print("Player can interact with " + gameObject.name);
+#endif
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D coll)
     {
-        if (collision.gameObject.tag == "Player")
+        if (coll.gameObject.tag == "Player")
         {
             player = null;
             if (isInteracting)
             {
                 isInteracting = false;
                 StopInteraction();
-                if (debug)
-                    print("Interaction stopped on collider exit with " + gameObject.name);
+#if (DEBUG)
+                print("Interaction stopped on collider exit with " + gameObject.name);
+#endif
             }
-            if (debug)
-                print("Player can no longer interact with " + gameObject.name);
+#if (DEBUG)
+            print("Player can no longer interact with " + gameObject.name);
+#endif
         }
     }
 
@@ -45,15 +48,17 @@ public class Interact : MonoBehaviour {
             {
                 isInteracting = true;
                 StartInteraction();
-                if (debug)
-                    print("Player interacted with " + gameObject.name);
+#if (DEBUG)
+                print("Player interacted with " + gameObject.name);
+#endif
             }
             else if(isInteracting && !Input.GetButton("Interact"))
             {
                 isInteracting = false;
                 StopInteraction();
-                if (debug)
-                    print("Interaction stopped  with" + gameObject.name);
+#if (DEBUG)
+                print("Interaction stopped  with" + gameObject.name);
+#endif
             }
         }
     }
