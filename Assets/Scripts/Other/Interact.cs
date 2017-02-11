@@ -30,7 +30,7 @@ public class Interact : MonoBehaviour {
                 isInteracting = false;
                 StopInteraction();
                 if (debug)
-                    print("Interaction stopped on collider exit " + gameObject.name);
+                    print("Interaction stopped on collider exit with " + gameObject.name);
             }
             if (debug)
                 print("Player can no longer interact with " + gameObject.name);
@@ -52,6 +52,8 @@ public class Interact : MonoBehaviour {
             {
                 isInteracting = false;
                 StopInteraction();
+                if (debug)
+                    print("Interaction stopped  with" + gameObject.name);
             }
         }
     }
