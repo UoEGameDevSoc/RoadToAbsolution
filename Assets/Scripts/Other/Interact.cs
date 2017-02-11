@@ -2,20 +2,23 @@
 using System.Collections;
 
 public class Interact : MonoBehaviour {
-    private bool canInteract = false;
+    //Reference to the player
+    private GameObject player;
+    //Whether we are currently interacting with something
+    //Used for things like showing/hiding UI
     private bool isInteracting = false;
 
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
-            canInteract = true;
+        if (collision.gameObject.tag == "Player")
+            player = collision.gameObject;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
-            canInteract = false;
+            player = null;
         if (isInteracting)
         {
             isInteracting = false;
@@ -25,7 +28,7 @@ public class Interact : MonoBehaviour {
 
     private void Update()
     {
-        if (canInteract)
+        if (player)
         {
             if(!isInteracting && Input.GetButton("Interact"))
             {
@@ -42,11 +45,12 @@ public class Interact : MonoBehaviour {
 
     private void StartInteraction()
     {
-        //Add interaction code here
+        //What happens when the interaction begin
     }
 
     private void StopInteraction()
     {
-        //Add interaction code here
+        //What happens when the interaction ends
+        //Can be left empty if nothing needs to be done
     }
 }
