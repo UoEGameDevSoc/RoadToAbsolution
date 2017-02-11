@@ -3,38 +3,33 @@ using System.Collections;
 
 public class PlayerMovementScript : MonoBehaviour
 {
-    [SerializeField]
-    private float acceleration = 1f;
 
-    [SerializeField]
-    private float maxSpeed = 5f;
-
-    private Rigidbody rigidBody;
-
-    // Use this for initialization
+    public float speed;
+    public Rigidbody2D rb2d;
+               
     void Start()
     {
-        //Probably gonna have some shit
-        rigidBody = GetComponent<Rigidbody>();
+        speed = 1f;
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+
+    void Update()
     {
-        float x = Input.GetAxis("Horizontal") * Time.fixedDeltaTime * acceleration;
-        float y = Input.GetAxis("Vertical") * Time.fixedDeltaTime * acceleration;
-
-        /*rigidBody.velocity += new Vector3(x, y);
-        if (rigidBody.velocity.magnitude > maxSpeed)
-        {
-            rigidBody.velocity = rigidBody.velocity.normalized * maxSpeed;
-        }
-
-        //if (x == 0f) rigidBody.velocity.x = 0f;
-        print(x.ToString() + " " + y.ToString());
-        rigidBody.velocity = new Vector3(Input.GetButtonUp("Horizontal") ? 0f : rigidBody.velocity.x, y == 0f ? 0f : rigidBody.velocity.y, 0f);*/
 
         
 
     }
+
+    //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
+    void FixedUpdate()
+    {
+	
+		float x = Input.GetAxis ("Horizontal")*speed*Time.fixedDeltaTime;
+		float y = Input.GetAxis ("Vertical")*speed*Time.fixedDeltaTime;
+
+		transform.position += new Vector3 (x, y, 0f);
+
+    }
+
 }
