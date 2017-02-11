@@ -16,6 +16,11 @@ public class Interact : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Player")
             canInteract = false;
+        if (isInteracting)
+        {
+            isInteracting = false;
+            StopInteraction();
+        }
     }
 
     private void Update()
@@ -25,12 +30,22 @@ public class Interact : MonoBehaviour {
             if(!isInteracting && Input.GetButton("Interact"))
             {
                 isInteracting = true;
-                BeginInteraction();
+                StartInteraction();
+            }
+            else if(isInteracting && !Input.GetButton("Interact"))
+            {
+                isInteracting = false;
+                StopInteraction();
             }
         }
     }
 
-    private void BeginInteraction()
+    private void StartInteraction()
+    {
+        //Add interaction code here
+    }
+
+    private void StopInteraction()
     {
         //Add interaction code here
     }
