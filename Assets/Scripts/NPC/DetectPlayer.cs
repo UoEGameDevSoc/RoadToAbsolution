@@ -35,7 +35,10 @@ public class DetectPlayer : MonoBehaviour {
         Vector3 playerPosition = player.transform.position;
         bool wasSeen = false;
 
-		if((myPosition - playerPosition).magnitude <= detectionRange && Vector3.Angle(gameObject.transform.rotation.eulerAngles, playerPosition-myPosition) <= detectionRadius/2f)
+        float angle = Vector3.Angle(playerPosition - myPosition, new Vector3(1f, 0f, 0f)) - gameObject.transform.rotation.z + detectionRadius/2f + 360f;
+        angle -= Mathf.Round(angle / 360f) * 360f;
+
+        if ((myPosition - playerPosition).magnitude <= detectionRange && angle <= detectionRadius)
         {
             //We are in the vision cone, but might be behind cover
             RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, player.transform.position, detectionRange);
