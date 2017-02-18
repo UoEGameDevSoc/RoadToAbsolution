@@ -5,7 +5,11 @@ public class PlayerMovementScript : MonoBehaviour
 {
 
     public float speed = 2f;
-    public Rigidbody2D rb2d;
+	public float sprintSpeedMod = 1.5f;
+	public float sneakSpeedMod = 0.5f;
+	[SerializeField]
+	private float speedMod = 1;
+    private Rigidbody2D rb2d;
                
     void Start()
     {
@@ -24,8 +28,14 @@ public class PlayerMovementScript : MonoBehaviour
     void FixedUpdate()
     {
 
-		float x = Input.GetAxisRaw ("Horizontal")*speed*Time.fixedDeltaTime;
-		float y = Input.GetAxisRaw ("Vertical")*speed*Time.fixedDeltaTime;
+		if (Input.GetAxis ("Fire3") != 0f)
+			speedMod = sprintSpeedMod;
+		else if (Input.GetAxis ("Fire1") != 0f)
+			speedMod = sneakSpeedMod;
+		else
+			speedMod = 1f;
+		float x = Input.GetAxisRaw ("Horizontal")*speed*speedMod*Time.fixedDeltaTime;
+		float y = Input.GetAxisRaw ("Vertical")*speed*speedMod*Time.fixedDeltaTime;
 
 		transform.position += new Vector3 (x, y, 0f);
 
