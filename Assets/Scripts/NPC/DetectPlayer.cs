@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//Comment out for debugging
+//#undef DEBUG
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,13 +43,21 @@ public class DetectPlayer : MonoBehaviour {
             {
                 //We can be seen, so increase the meter based on the curve
                 detectionMeter += detectionRate.Evaluate(1 - hit.distance / detectionRange);
+                detectionMeter = Mathf.Min(100f, detectionMeter);
                 wasSeen = true;
+#if DEBUG
+                print("Player detected. Detection meter is now " + detectionMeter);
+#endif
             }
         }
         if(!wasSeen)
         {
             //Decrease the detection meter if we weren't seen
             detectionMeter -= Time.deltaTime * decreaseRate;
+            detectionMeter = Mathf.Max(0f, detectionMeter);
+#if DEBUG
+            print("Player not detected. Detection meter is now " + detectionMeter);
+#endif
         }
 	}
 }
