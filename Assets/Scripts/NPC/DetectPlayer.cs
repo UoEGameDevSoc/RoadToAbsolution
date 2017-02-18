@@ -41,8 +41,8 @@ public class DetectPlayer : MonoBehaviour {
         if ((myPosition - playerPosition).magnitude <= detectionRange && angle <= detectionRadius)
         {
             //We are in the vision cone, but might be behind cover
-            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, player.transform.position, detectionRange);
-            if(hit.collider.gameObject == player)
+            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, player.transform.position);
+            if(hit && hit.collider.gameObject == player)
             {
                 //We can be seen, so increase the meter based on the curve
                 detectionMeter += detectionRate.Evaluate(1 - hit.distance / detectionRange);
