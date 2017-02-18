@@ -45,7 +45,7 @@ public class DetectPlayer : MonoBehaviour {
             if(hit && hit.collider.gameObject == player)
             {
                 //We can be seen, so increase the meter based on the curve
-                detectionMeter += detectionRate.Evaluate(1 - hit.distance / detectionRange);
+                detectionMeter += detectionRate.Evaluate(1f - hit.distance / detectionRange);
                 detectionMeter = Mathf.Min(100f, detectionMeter);
                 wasSeen = true;
 #if DEBUG
