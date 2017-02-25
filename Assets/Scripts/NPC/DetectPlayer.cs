@@ -8,16 +8,16 @@ using UnityEngine;
 public class DetectPlayer : MonoBehaviour {
     //How wide the cone of vision is (in degrees)
     [SerializeField]
-    private float detectionRadius = 60f;
+    private float detectionRadius = 90f;
     //How long the cone of vision is
     [SerializeField]
-    private float detectionRange = 10f;
+    private float detectionRange = 5f;
     //Detection rate based on range
     [SerializeField]
     private AnimationCurve detectionRate = AnimationCurve.Linear(0f, 0f, 1f, 1f);
     //How fast the enemy loses track of the player (per second)
     [SerializeField]
-    private float decreaseRate = 1f;
+    private float reductionRate = 1f;
 
     //Reference to the player
     private GameObject player;
@@ -35,14 +35,14 @@ public class DetectPlayer : MonoBehaviour {
         Vector3 playerPosition = player.transform.position;
         bool wasSeen = false;
 
-        float angle = Vector3.Angle(playerPosition - myPosition, new Vector3(1f, 0f, 0f)) - gameObject.transform.rotation.z + detectionRadius/2f + 360f;
-        angle -= Mathf.Round(angle / 360f) * 360f;
+        float angle = Vector3.Angle(playerPosition - myPosition, new Vector3(1f, 0f, 0f)) - gameObject.transform.rotation.eulerAngles.z + detectionRadius/2f;
+        angle -= Mathf.Floor(angle / 360f) * 360f;
 
         if ((myPosition - playerPosition).magnitude <= detectionRange && angle <= detectionRadius)
         {
             //We are in the vision cone, but might be behind cover
-            RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, player.transform.position);
-            if(hit && hit.collider.gameObject == player)
+            RaycastHit2D hit = Physics2D.Raycast(myPosition, (playerPosition - myPosition).normalized);
+            if(hit.collider && hit.collider.gameObject == player)
             {
                 //We can be seen, so increase the meter based on the curve
                 detectionMeter += detectionRate.Evaluate(1f - hit.distance / detectionRange);
@@ -56,7 +56,7 @@ public class DetectPlayer : MonoBehaviour {
         if(!wasSeen)
         {
             //Decrease the detection meter if we weren't seen
-            detectionMeter -= Time.deltaTime * decreaseRate;
+            detectionMeter -= Time.deltaTime * reductionRate;
             detectionMeter = Mathf.Max(0f, detectionMeter);
 #if DEBUG
             print("Player not detected. Detection meter is now " + detectionMeter);
