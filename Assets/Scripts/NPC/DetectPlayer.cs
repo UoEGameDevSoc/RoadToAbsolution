@@ -1,5 +1,5 @@
 ﻿//Comment out for debugging
-//#undef DEBUG
+#undef DEBUG
 
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +27,10 @@ public class DetectPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        if(player == null)
+        {
+            Debug.LogError("No player found! Make sure the player is tagged with the \"Player\" tag.");
+        }
 	}
 	
 	// Update is called once per frame
