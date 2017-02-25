@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuseTime: 3
   explosion: {fileID: 1317753588927260, guid: be0922e15a8a9f44db25db5b08f8894d, type: 2}
+  speed: 7.5
 --- !u!212 &212750423217361660
 SpriteRenderer:
   m_ObjectHideFlags: 1

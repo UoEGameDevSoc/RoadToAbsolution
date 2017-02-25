@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour
+public class Grenade : Item
 {
 
     public float fuseTime;
     public GameObject explosion;
+	public float speed = 120f;
 
-    private Vector3 vel;
+    private Vector2 vel;
     private Rigidbody2D rb2d;
     private float timer = 0f;
 
@@ -17,7 +18,6 @@ public class Grenade : MonoBehaviour
 	void Start()
 	{
 	    rb2d = GetComponent<Rigidbody2D>();
-        setVelocity(new Vector3(0.5f, 0.5f, 0f));
 	}
 
     void Update()
@@ -27,22 +27,26 @@ public class Grenade : MonoBehaviour
         {
             explode();
         }
+		gameObject.transform.position += (Vector3)vel*Time.deltaTime;
     }
 
     // Update is called once per frame
 	void FixedUpdate ()
 	{
-	    gameObject.transform.position += vel*Time.fixedDeltaTime;
+	    
 	}
 
-    public void setVelocity(Vector3 vel)
+	//mX/mY = mouseX/Y sX/sY = sourceX/Y
+	public void setVelocity(Vector2 currentPos, Vector2 targetPos)
     {
-        this.vel = vel;
+		Vector2 direction = (targetPos - currentPos).normalized;
+		vel = direction * speed;
+		print (direction);
     }
 
     void explode()
     {
-        explosion.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+		explosion.transform.position = gameObject.transform.position;
         Instantiate(explosion);
         Destroy(gameObject);
     }
