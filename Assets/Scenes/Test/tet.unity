@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 20
+  rotateAngle: 90
 --- !u!1 &1979758303 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1596709352117068, guid: d5714fd20f800e74397f167635bd11e3,
